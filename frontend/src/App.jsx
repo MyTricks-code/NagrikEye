@@ -7,6 +7,8 @@ import { Routes, Route, useLocation } from "react-router-dom";
 // import Navbar from "./components/Navbar";
 import LandingPage from "./pages/LandingPage";
 import LoadingScreen from "./components/LoadingScreen";
+import LandingPage from "./pages/LandingPage"
+import Posts from "./pages/Posts";
 
 function App() {
   const { user } = useAuth();
@@ -22,6 +24,7 @@ function App() {
       <Routes>
         <Route path="/" element={<LandingPage />} />
         <Route path="/login" element={<Auth />} />
+        <Route path="/reports" element={<Posts />}/>
       </Routes>
     </div>
   );
