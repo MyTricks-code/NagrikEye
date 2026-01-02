@@ -92,7 +92,7 @@ export default function Auth() {
 
           <button
             disabled={loading}
-            className="w-full rounded-lg bg-[#339966] py-3 font-semibold text-white transition-colors duration-200 hover:bg-[#2b8056] disabled:opacity-60"
+            className="w-full rounded-lg bg-[#339966] py-3 font-semibold text-white transition-colors duration-200 hover:bg-[#2b8056] disabled:opacity-60 cursor-pointer"
           >
             {loading
               ? isSignup
@@ -112,7 +112,7 @@ export default function Auth() {
 
         <button
           onClick={loginWithGoogle}
-          className="flex w-full items-center justify-center gap-3 rounded-lg border border-zinc-300 bg-white py-3 text-zinc-700 transition-colors duration-200 hover:bg-zinc-50 auth-item opacity-0 translate-y-5"
+          className="flex w-full items-center justify-center gap-3 rounded-lg border border-zinc-300 bg-white py-3 text-zinc-700 transition-colors duration-200 hover:bg-zinc-50 auth-item opacity-0 translate-y-5 cursor-pointer"
         >
           <img
             src="https://www.svgrepo.com/show/475656/google-color.svg"

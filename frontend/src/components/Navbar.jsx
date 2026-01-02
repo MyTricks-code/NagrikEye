@@ -2,11 +2,10 @@ import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import logo from '../assets/logo.svg';
 import userAvatar from '../assets/user_avatar.svg';
-import ReportPopup from './ReportPopup';
+// import ReportPopup from './ReportPopup';
 
-const Navbar = () => {
+const Navbar = ({ onOpenReport }) => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
-  const [isQuoteOpen, setIsQuoteOpen] = useState(false);
 
   return (
     <>
@@ -52,7 +51,7 @@ const Navbar = () => {
 
           <div
             className="flex items-center justify-between shadow-sm flex-shrink-0 relative overflow-hidden group cursor-pointer bg-white rounded-[10px] h-full min-w-[192px]"
-            onClick={() => setIsQuoteOpen(true)}
+            onClick={onOpenReport}
           >
             <div className="absolute right-[10px] top-1/2 -translate-y-1/2 bg-black rounded-full transition-all duration-[250ms] ease-[cubic-bezier(0.5,0,0,1)] w-[40px] h-[40px] group-hover:right-0 group-hover:w-full group-hover:h-full group-hover:rounded-[10px] z-0"></div>
 
@@ -83,7 +82,7 @@ const Navbar = () => {
 
             <div className="flex items-center gap-2">
               <button
-                onClick={() => setIsQuoteOpen(true)}
+                onClick={onOpenReport}
                 className="bg-[#F5F1E4] hover:bg-[#ebe5d5] text-[#1a1a1a] px-4 py-2 rounded-[8px] text-[15px] font-medium transition-colors"
                 style={{ borderRadius: '8px' }}
               >
@@ -153,7 +152,7 @@ const Navbar = () => {
         )}
       </div>
 
-      <ReportPopup isOpen={isQuoteOpen} onClose={() => setIsQuoteOpen(false)} />
+      {/* <ReportPopup isOpen={isQuoteOpen} onClose={() => setIsQuoteOpen(false)} /> */}
     </>
   );
 };

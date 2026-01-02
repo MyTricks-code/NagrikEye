@@ -71,7 +71,7 @@ const ReportPopup = ({ isOpen, onClose }) => {
             <div className="relative w-full h-auto max-h-[90vh] bg-[#F5F1E4] rounded-t-[50px] shadow-2xl overflow-y-auto animate-slide-up flex flex-col">
                 <button
                     onClick={onClose}
-                    className="absolute w-12 h-12 bg-[#F5E84E] rounded-full flex items-center justify-center hover:bg-[#ebd040] transition-colors z-50 shadow-sm top-[21.25px] right-[21.25px]"
+                    className="absolute w-12 h-12 bg-[#F5E84E] rounded-full flex items-center justify-center hover:bg-[#ebd040] transition-colors z-50 shadow-sm top-[21.25px] right-[21.25px] cursor-pointer"
                 >
                     <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="black" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                         <line x1="18" y1="6" x2="6" y2="18"></line>
@@ -102,7 +102,7 @@ const ReportPopup = ({ isOpen, onClose }) => {
                                     <button
                                         type="button"
                                         onClick={handleDetectLocation}
-                                        className="absolute right-0 top-0 text-black/50 hover:text-[#8ED462] transition-colors p-1"
+                                        className="absolute right-0 top-0 text-black/50 hover:text-[#8ED462] transition-colors p-1 cursor-pointer"
                                         title="Auto-detect Location"
                                     >
                                         <svg
@@ -204,7 +204,7 @@ const ReportPopup = ({ isOpen, onClose }) => {
                         </div>
 
                         <div className="pt-4">
-                            <button className="bg-black text-white px-8 py-3 rounded-full text-lg font-medium hover:bg-gray-800 transition-colors">
+                            <button className="bg-black text-white px-8 py-3 rounded-full text-lg font-medium hover:bg-gray-800 transition-colors cursor-pointer">
                                 Submit Report Anonymously
                             </button>
                         </div>
