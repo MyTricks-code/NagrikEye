@@ -18,7 +18,10 @@ function App() {
 
   return (
     <div>
-      <LandingPage />
+      <Routes>
+        <Route path="/" element={<LandingPage />} />
+        <Route path="/login" element={<Auth />} />
+      </Routes>
     </div>
   );
 }

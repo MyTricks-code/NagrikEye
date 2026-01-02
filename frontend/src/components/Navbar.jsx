@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { Link } from "react-router-dom";
 import logo from '../assets/logo.svg';
 import userAvatar from '../assets/user_avatar.svg';
 import ReportPopup from './ReportPopup';
@@ -13,14 +14,14 @@ const Navbar = () => {
       <nav className="hidden lg:block w-full fixed top-6 left-0 z-50 px-6 font-sans">
         <div className="mx-auto flex items-stretch justify-between h-[68px] gap-[24px] max-w-[1306.5px]">
           <div className="flex items-center flex-grow shadow-sm bg-white rounded-[10px] pl-[17px] pr-[10.625px] h-full">
-            <a href="#" className="flex items-center gap-2 group mr-auto">
+            <Link to="/" className="flex items-center gap-2 group mr-auto">
               <span className="flex items-center justify-center">
                 <img src={logo} alt="NagrikEye" className="h-[28px] w-auto" />
               </span>
               <span className="flex items-center ml-2">
                 <span className="text-[20px] font-medium text-[#1a1a1a] tracking-normal">NagrikEye</span>
               </span>
-            </a>
+            </Link>
 
             <div className="flex items-center gap-1 mr-6">
               {[
@@ -42,10 +43,10 @@ const Navbar = () => {
                 </div>
               ))}
 
-              <a href="#" className="relative group flex items-center justify-center px-[20px] h-[40px] cursor-pointer ml-2">
+              <Link to="/login" className="relative group flex items-center justify-center px-[20px] h-[40px] cursor-pointer ml-2">
                 <span className="absolute inset-0 bg-[#1a1a1a] rounded-full transition-all duration-300 ease-in-out group-hover:scale-105 group-hover:bg-black"></span>
                 <span className="relative z-10 text-[16px] font-medium text-white">Login</span>
-              </a>
+              </Link>
             </div>
           </div>
 
@@ -75,10 +76,10 @@ const Navbar = () => {
         <div className="flex flex-col p-4 pointer-events-auto">
 
           <div className="bg-white rounded-[10px] shadow-sm px-[12px] py-[8px] flex items-center justify-between min-h-[61px]">
-            <a href="#" className="flex items-center gap-2 pl-1">
+            <Link to="/" className="flex items-center gap-2 pl-1">
               <img src={logo} alt="NagrikEye" className="h-[24px] w-auto" />
               <span className="text-[18px] font-medium text-[#1a1a1a]">NagrikEye</span>
-            </a>
+            </Link>
 
             <div className="flex items-center gap-2">
               <button
@@ -137,12 +138,12 @@ const Navbar = () => {
             className={`transition-all duration-500 ease-[cubic-bezier(0.32,0.72,0,1)] delay-75 overflow-hidden ${isMobileMenuOpen ? 'max-h-[100px] opacity-100 mt-1' : 'max-h-0 opacity-0 mt-0'
               }`}
           >
-            <div className="bg-[#1a1a1a] rounded-[10px] shadow-sm px-5 py-3 flex items-center justify-between group cursor-pointer">
+            <Link to="/login" className="bg-[#1a1a1a] rounded-[10px] shadow-sm px-5 py-3 flex items-center justify-between group cursor-pointer">
               <span className="text-[18px] font-medium text-white group-hover:scale-105 transition-transform duration-300">Login</span>
               <div className="w-9 h-9 bg-white/10 rounded-full flex items-center justify-center overflow-hidden group-hover:bg-white/20 transition-colors">
                 <img src={userAvatar} alt="Login" className="w-full h-full object-cover" />
               </div>
-            </div>
+            </Link>
           </div>
         </div>
 

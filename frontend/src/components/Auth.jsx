@@ -6,7 +6,7 @@ import {
 } from "../firebase/auth";
 
 export default function Auth() {
-  const [mode, setMode] = useState("signup"); // signup | login
+  const [mode, setMode] = useState("signup");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
@@ -32,18 +32,16 @@ export default function Auth() {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-black via-zinc-900 to-black">
-      <div className="w-full max-w-md rounded-2xl border border-zinc-800 bg-zinc-900/80 p-8 shadow-xl backdrop-blur">
-        
-        {/* Header */}
-        <h2 className="text-2xl font-bold text-white text-center">
+    <div className="min-h-screen flex items-center justify-center bg-[#f5f1e4]">
+      <div className="w-full max-w-md rounded-2xl border border-zinc-200 bg-white/50 p-8 shadow-xl backdrop-blur">
+
+        <h2 className="text-2xl font-bold text-zinc-800 text-center">
           {isSignup ? "Create an account" : "Welcome back"}
         </h2>
-        <p className="text-zinc-400 text-center text-sm mt-1">
+        <p className="text-zinc-500 text-center text-sm mt-1">
           {isSignup ? "Sign up to get started" : "Login to your account"}
         </p>
 
-        {/* Form */}
         <form onSubmit={handleSubmit} className="mt-6 space-y-4">
           <input
             type="email"
@@ -51,7 +49,7 @@ export default function Auth() {
             required
             value={email}
             onChange={(e) => setEmail(e.target.value)}
-            className="w-full rounded-lg bg-zinc-800 px-4 py-3 text-white placeholder-zinc-400 outline-none ring-1 ring-zinc-700 focus:ring-2 focus:ring-white"
+            className="w-full rounded-lg bg-white px-4 py-3 text-zinc-800 placeholder-zinc-400 outline-none ring-1 ring-zinc-300 focus:ring-2 focus:ring-[#339966]"
           />
 
           <input
@@ -61,38 +59,36 @@ export default function Auth() {
             minLength={6}
             value={password}
             onChange={(e) => setPassword(e.target.value)}
-            className="w-full rounded-lg bg-zinc-800 px-4 py-3 text-white placeholder-zinc-400 outline-none ring-1 ring-zinc-700 focus:ring-2 focus:ring-white"
+            className="w-full rounded-lg bg-white px-4 py-3 text-zinc-800 placeholder-zinc-400 outline-none ring-1 ring-zinc-300 focus:ring-2 focus:ring-[#339966]"
           />
 
           {error && (
-            <p className="text-sm text-red-400">{error}</p>
+            <p className="text-sm text-red-500">{error}</p>
           )}
 
           <button
             disabled={loading}
-            className="w-full rounded-lg bg-white py-3 font-semibold text-black transition hover:bg-zinc-200 disabled:opacity-60"
+            className="w-full rounded-lg bg-[#339966] py-3 font-semibold text-white transition hover:bg-[#2b8056] disabled:opacity-60"
           >
             {loading
               ? isSignup
                 ? "Creating account..."
                 : "Logging in..."
               : isSignup
-              ? "Sign Up"
-              : "Login"}
+                ? "Sign Up"
+                : "Login"}
           </button>
         </form>
 
-        {/* Divider */}
         <div className="my-6 flex items-center gap-3">
-          <div className="h-px flex-1 bg-zinc-700" />
+          <div className="h-px flex-1 bg-zinc-300" />
           <span className="text-xs text-zinc-400">OR</span>
-          <div className="h-px flex-1 bg-zinc-700" />
+          <div className="h-px flex-1 bg-zinc-300" />
         </div>
 
-        {/* Google */}
         <button
           onClick={loginWithGoogle}
-          className="flex w-full items-center justify-center gap-3 rounded-lg border border-zinc-700 bg-zinc-800 py-3 text-white transition hover:bg-zinc-700"
+          className="flex w-full items-center justify-center gap-3 rounded-lg border border-zinc-300 bg-white py-3 text-zinc-700 transition hover:bg-zinc-50"
         >
           <img
             src="https://www.svgrepo.com/show/475656/google-color.svg"
@@ -102,12 +98,11 @@ export default function Auth() {
           Continue with Google
         </button>
 
-        {/* Toggle */}
-        <p className="mt-6 text-center text-sm text-zinc-400">
+        <p className="mt-6 text-center text-sm text-zinc-500">
           {isSignup ? "Already have an account?" : "New here?"}{" "}
           <span
             onClick={() => setMode(isSignup ? "login" : "signup")}
-            className="cursor-pointer text-white hover:underline"
+            className="cursor-pointer text-[#339966] hover:underline"
           >
             {isSignup ? "Login" : "Sign up"}
           </span>
