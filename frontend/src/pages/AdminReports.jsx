@@ -2,44 +2,37 @@ import React, { useState, useEffect, useRef } from 'react';
 import { db, auth } from '../firebase/firebase';
 import { collection, query, orderBy, onSnapshot, doc, updateDoc } from 'firebase/firestore';
 import { useAuth } from '../context/AuthContext';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useSearchParams } from 'react-router-dom';
 import Sidebar from '../components/Sidebar';
 import gsap from 'gsap';
 import { useGSAP } from '@gsap/react';
 
-const REPORT_SUBCATEGORY_OPTIONS = [
-    'Potholes / Road Damage',
-    'Illegal Construction',
-    'Stray Cattle',
-    'Garbage / Drainage',
-    'Other',
-    'Noise Pollution',
-    'Community Safety',
-    'Public Nuisance',
-    'Neighborhood Dispute',
-    'Power Outage',
-    'Street Lighting',
-    'Transformer Issue',
-    'Meter/Billing',
-    'Gas Leak',
-    'Pipeline Damage',
-    'Cylinder Delivery',
-    'Meter Fault',
-    'Water Supply Issue',
-    'Sewage Blockage',
-    'Waste Collection Delay',
-    'Public Toilet Issue',
-    'Other Gas Issue',
-    'Other Social Issue',
-    'Other Electricity Issue',
-    'Other Municipal Issue'
-];
+const DEPT_SUBCATEGORIES = {
+    hazard:      ['Potholes / Road Damage', 'Illegal Construction', 'Stray Cattle', 'Garbage / Drainage', 'Other'],
+    social:      ['Noise Pollution', 'Community Safety', 'Public Nuisance', 'Neighborhood Dispute', 'Other Social Issue'],
+    electricity: ['Power Outage', 'Street Lighting', 'Transformer Issue', 'Meter/Billing', 'Other Electricity Issue'],
+    gas:         ['Gas Leak', 'Pipeline Damage', 'Cylinder Delivery', 'Meter Fault', 'Other Gas Issue'],
+    municipal:   ['Water Supply Issue', 'Sewage Blockage', 'Waste Collection Delay', 'Public Toilet Issue', 'Other Municipal Issue'],
+};
+
+const ALL_SUBCATEGORY_OPTIONS = Object.values(DEPT_SUBCATEGORIES).flat();
 
 const AdminReports = () => {
     const { user } = useAuth();
     const navigate = useNavigate();
+    const [searchParams] = useSearchParams();
+    const activeDept = searchParams.get('dept') || null;
     const container = useRef();
     const dropdownRef = useRef(null);
+
+    const DEPT_META = {
+        hazard:      { label: 'Hazard Report',        color: 'text-orange-500',  bg: 'bg-orange-50',  badge: 'bg-orange-100 text-orange-700 border-orange-200' },
+        social:      { label: 'Social Condition',      color: 'text-blue-500',    bg: 'bg-blue-50',    badge: 'bg-blue-100 text-blue-700 border-blue-200' },
+        electricity: { label: 'Electricity Utility',   color: 'text-yellow-500',  bg: 'bg-yellow-50',  badge: 'bg-yellow-100 text-yellow-700 border-yellow-200' },
+        gas:         { label: 'Gas Distribution',      color: 'text-red-500',     bg: 'bg-red-50',     badge: 'bg-red-100 text-red-700 border-red-200' },
+        municipal:   { label: 'Municipal (Water/Waste)', color: 'text-teal-500',  bg: 'bg-teal-50',    badge: 'bg-teal-100 text-teal-700 border-teal-200' },
+    };
+    const deptMeta = activeDept ? DEPT_META[activeDept] : null;
 
     const [reports, setReports] = useState([]);
     const [loading, setLoading] = useState(true);
@@ -82,6 +75,12 @@ const AdminReports = () => {
 
         return () => unsubscribe();
     }, [user, navigate]);
+
+    // Reset category filter when department tab changes
+    useEffect(() => {
+        setCategoryFilter('all');
+        setIsCategoryDropdownOpen(false);
+    }, [activeDept]);
 
     useEffect(() => {
         const handleClickOutside = (event) => {
@@ -161,8 +160,12 @@ const AdminReports = () => {
         document.body.removeChild(link);
     };
 
-    const categoryCandidates = [...REPORT_SUBCATEGORY_OPTIONS, ...reports.map(r => r.selectedCategory || 'General')];
-    const categories = ['All Categories', ...new Set(categoryCandidates)];
+    // If a department tab is active, only show that department's subcategories;
+    // otherwise show all subcategories that appear in the current report set.
+    const categories = activeDept
+        ? ['All Categories', ...(DEPT_SUBCATEGORIES[activeDept] || [])]
+        : ['All Categories', ...new Set([...ALL_SUBCATEGORY_OPTIONS, ...reports.map(r => r.selectedCategory).filter(Boolean)])];
+
 
     const filteredReports = reports.filter(r => {
         const matchesStatus = statusFilter === 'all' ||
@@ -176,7 +179,9 @@ const AdminReports = () => {
             (r.description && r.description.toLowerCase().includes(searchQuery.toLowerCase())) ||
             (r.location && r.location.toLowerCase().includes(searchQuery.toLowerCase()));
 
-        return matchesStatus && matchesCategory && matchesSearch;
+        const matchesDept = !activeDept || (r.reportType || 'hazard') === activeDept;
+
+        return matchesStatus && matchesCategory && matchesSearch && matchesDept;
     });
 
     if (loading) return <div className="h-screen flex items-center justify-center bg-[#F5F5F2]">Loading...</div>;
@@ -213,8 +218,21 @@ const AdminReports = () => {
                         )}
 
                         <div>
-                            <h1 className="text-4xl font-bold tracking-tight mb-2">Reports Management</h1>
-                            <p className="text-stone-500">View, filter, and manage all citizen reports</p>
+                            {deptMeta ? (
+                                <>
+                                    <div className="flex items-center gap-2 mb-1">
+                                        <span className="text-xs font-bold uppercase tracking-widest text-stone-400">Department</span>
+                                        <span className={`px-2 py-0.5 rounded-full text-xs font-bold border ${deptMeta.badge}`}>{deptMeta.label}</span>
+                                    </div>
+                                    <h1 className="text-4xl font-bold tracking-tight mb-2">{deptMeta.label}</h1>
+                                    <p className="text-stone-500">Showing reports for <span className={`font-semibold ${deptMeta.color}`}>{deptMeta.label}</span></p>
+                                </>
+                            ) : (
+                                <>
+                                    <h1 className="text-4xl font-bold tracking-tight mb-2">Reports Management</h1>
+                                    <p className="text-stone-500">View, filter, and manage all citizen reports</p>
+                                </>
+                            )}
                         </div>
 
                         <div className="flex gap-3 w-full md:w-auto">

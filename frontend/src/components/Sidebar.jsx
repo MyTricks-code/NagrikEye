@@ -43,7 +43,7 @@ const Sidebar = ({ isCollapsed, toggleSidebar, onLogout, isMobile, menuItems: pr
             )
         },
         {
-            name: 'Reports', path: '/admin-reports', icon: (
+            name: 'All Reports', path: '/admin-reports', icon: (
                 <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                     <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
                     <polyline points="14 2 14 8 20 8"></polyline>
@@ -53,6 +53,69 @@ const Sidebar = ({ isCollapsed, toggleSidebar, onLogout, isMobile, menuItems: pr
                 </svg>
             )
         },
+        { type: 'section', name: 'Departments' },
+        {
+            name: 'Hazard Report',
+            path: '/admin-reports',
+            fullPath: '/admin-reports?dept=hazard',
+            icon: (
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                    <path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"></path>
+                    <line x1="12" y1="9" x2="12" y2="13"></line>
+                    <line x1="12" y1="17" x2="12.01" y2="17"></line>
+                </svg>
+            )
+        },
+        {
+            name: 'Social Condition',
+            path: '/admin-reports',
+            fullPath: '/admin-reports?dept=social',
+            icon: (
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                    <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
+                    <circle cx="9" cy="7" r="4"></circle>
+                    <path d="M23 21v-2a4 4 0 0 0-3-3.87"></path>
+                    <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
+                </svg>
+            )
+        },
+        {
+            name: 'Electricity',
+            path: '/admin-reports',
+            fullPath: '/admin-reports?dept=electricity',
+            icon: (
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                    <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon>
+                </svg>
+            )
+        },
+        {
+            name: 'Gas Distribution',
+            path: '/admin-reports',
+            fullPath: '/admin-reports?dept=gas',
+            icon: (
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                    <path d="M12 2c0 0-6 6-6 12a6 6 0 0 0 12 0c0-6-6-12-6-12z"></path>
+                    <path d="M12 12c0 0-3 3-3 5a3 3 0 0 0 6 0c0-2-3-5-3-5z"></path>
+                </svg>
+            )
+        },
+        {
+            name: 'Municipal',
+            path: '/admin-reports',
+            fullPath: '/admin-reports?dept=municipal',
+            icon: (
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                    <path d="M12 22V12"></path>
+                    <path d="M5 12H2a10 10 0 0 0 20 0h-3"></path>
+                    <path d="M8 12V7"></path>
+                    <path d="M16 12V7"></path>
+                    <path d="M12 7V2"></path>
+                    <path d="M5 7h14"></path>
+                </svg>
+            )
+        },
+        { type: 'section', name: 'Tools' },
         {
             name: 'Analytics', path: '/admin-analytics', icon: (
                 <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
@@ -114,32 +177,46 @@ const Sidebar = ({ isCollapsed, toggleSidebar, onLogout, isMobile, menuItems: pr
                     </button>
                 </div>
 
-                <nav className="flex-1 py-8 px-3 space-y-2">
-                    {menuItems.map((item) => (
-                        <div key={item.name} className="relative group">
-                            <Link
-                                to={item.path}
-                                onClick={handleLinkClick}
-                                className={`flex items-center gap-4 px-3 py-3 rounded-xl transition-all duration-300 ${location.pathname === item.path
-                                    ? 'bg-[#8ED462] text-black font-medium shadow-lg shadow-[#8ED462]/20'
-                                    : 'text-stone-400 hover:bg-stone-800 hover:text-white'
-                                    }`}
-                            >
-                                <div className="shrink-0 w-6 h-6">{item.icon}</div>
-                                <span
-                                    className={`whitespace-nowrap transition-all duration-300 ${isCollapsed && !isMobile ? 'opacity-0 translate-x-4' : 'opacity-100 translate-x-0'
+                <nav className="flex-1 py-8 px-3 space-y-1 overflow-y-auto">
+                    {menuItems.map((item, idx) => {
+                        if (item.type === 'section') {
+                            return (
+                                <div key={`section-${idx}`} className={`pt-4 pb-1 transition-all duration-300 ${isCollapsed && !isMobile ? 'opacity-0 h-0 overflow-hidden py-0' : 'opacity-100'}`}>
+                                    <span className="px-3 text-[10px] font-bold uppercase tracking-widest text-stone-600">
+                                        {item.name}
+                                    </span>
+                                </div>
+                            );
+                        }
+                        const activePath = location.pathname + location.search;
+                        const itemFullPath = item.fullPath || item.path;
+                        const isActive = activePath === itemFullPath;
+                        return (
+                            <div key={item.name} className="relative group">
+                                <Link
+                                    to={itemFullPath}
+                                    onClick={handleLinkClick}
+                                    className={`flex items-center gap-4 px-3 py-3 rounded-xl transition-all duration-300 ${isActive
+                                        ? 'bg-[#8ED462] text-black font-medium shadow-lg shadow-[#8ED462]/20'
+                                        : 'text-stone-400 hover:bg-stone-800 hover:text-white'
                                         }`}
                                 >
-                                    {item.name}
-                                </span>
-                            </Link>
-                            {isCollapsed && !isMobile && (
-                                <div className="absolute left-[calc(100%+8px)] top-1/2 -translate-y-1/2 bg-black text-white text-xs px-2 py-1 rounded opacity-0 group-hover:opacity-100 pointer-events-none transition-opacity whitespace-nowrap z-50 border border-stone-800">
-                                    {item.name}
-                                </div>
-                            )}
-                        </div>
-                    ))}
+                                    <div className="shrink-0 w-6 h-6">{item.icon}</div>
+                                    <span
+                                        className={`whitespace-nowrap transition-all duration-300 ${isCollapsed && !isMobile ? 'opacity-0 translate-x-4' : 'opacity-100 translate-x-0'
+                                            }`}
+                                    >
+                                        {item.name}
+                                    </span>
+                                </Link>
+                                {isCollapsed && !isMobile && (
+                                    <div className="absolute left-[calc(100%+8px)] top-1/2 -translate-y-1/2 bg-black text-white text-xs px-2 py-1 rounded opacity-0 group-hover:opacity-100 pointer-events-none transition-opacity whitespace-nowrap z-50 border border-stone-800">
+                                        {item.name}
+                                    </div>
+                                )}
+                            </div>
+                        );
+                    })}
                 </nav>
 
                 <div className="p-4 border-t border-stone-800">

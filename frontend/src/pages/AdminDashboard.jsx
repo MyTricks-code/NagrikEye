@@ -2,7 +2,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import { db, auth } from '../firebase/firebase';
 import { collection, query, orderBy, onSnapshot } from 'firebase/firestore';
 import { useAuth } from '../context/AuthContext';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
 import Sidebar from '../components/Sidebar';
 import DashboardMap from '../components/DashboardMap';
 import gsap from 'gsap';
@@ -81,6 +81,14 @@ const AdminDashboard = () => {
         resolved: reports.filter(r => r.status === 'resolved').length
     };
 
+    const DEPT_CONFIG = [
+        { key: 'hazard',      label: 'Hazard',       icon: '⚠️', color: 'text-orange-500', bg: 'bg-orange-50',  border: 'border-orange-100', link: '/admin-reports?dept=hazard' },
+        { key: 'social',      label: 'Social',        icon: '🏘️', color: 'text-blue-500',   bg: 'bg-blue-50',    border: 'border-blue-100',   link: '/admin-reports?dept=social' },
+        { key: 'electricity', label: 'Electricity',   icon: '⚡', color: 'text-yellow-500', bg: 'bg-yellow-50',  border: 'border-yellow-100', link: '/admin-reports?dept=electricity' },
+        { key: 'gas',         label: 'Gas',           icon: '🔥', color: 'text-red-500',    bg: 'bg-red-50',     border: 'border-red-100',    link: '/admin-reports?dept=gas' },
+        { key: 'municipal',   label: 'Municipal',     icon: '🚰', color: 'text-teal-500',   bg: 'bg-teal-50',    border: 'border-teal-100',   link: '/admin-reports?dept=municipal' },
+    ];
+
     if (loading) return <div className="h-screen flex items-center justify-center bg-[#F5F5F2]">Loading...</div>;
 
     return (
@@ -138,6 +146,30 @@ const AdminDashboard = () => {
                             <div className="text-stone-500 text-sm font-medium uppercase tracking-wider mb-1">Resolved</div>
                             <div className="text-5xl font-bold text-[#8ED462] mb-2">{stats.resolved}</div>
                             <div className="text-[#8ED462]/80 text-sm">Successfully fixed</div>
+                        </div>
+                    </div>
+
+                    <div className="mb-8">
+                        <h2 className="text-lg font-bold mb-4 text-[#1a1a1a]">Issues by Department</h2>
+                        <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-4">
+                            {DEPT_CONFIG.map(dept => {
+                                const count = reports.filter(r => (r.reportType || 'hazard') === dept.key).length;
+                                const pending = reports.filter(r => (r.reportType || 'hazard') === dept.key && (!r.status || r.status === 'pending')).length;
+                                return (
+                                    <Link
+                                        key={dept.key}
+                                        to={dept.link}
+                                        className={`${dept.bg} border ${dept.border} rounded-2xl p-5 hover:shadow-md transition-all group active:scale-95`}
+                                    >
+                                        <div className="text-2xl mb-2">{dept.icon}</div>
+                                        <div className={`text-3xl font-bold ${dept.color} mb-1`}>{count}</div>
+                                        <div className="text-sm font-semibold text-[#1a1a1a] mb-1">{dept.label}</div>
+                                        {pending > 0 && (
+                                            <div className="text-xs text-stone-500">{pending} pending</div>
+                                        )}
+                                    </Link>
+                                );
+                            })}
                         </div>
                     </div>
 
