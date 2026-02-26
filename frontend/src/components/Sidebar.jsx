@@ -177,7 +177,7 @@ const Sidebar = ({ isCollapsed, toggleSidebar, onLogout, isMobile, menuItems: pr
                     </button>
                 </div>
 
-                <nav className="flex-1 py-8 px-3 space-y-1 overflow-y-auto">
+                <nav className="flex-1 py-8 px-3 space-y-1 overflow-y-auto scrollbar-hide">
                     {menuItems.map((item, idx) => {
                         if (item.type === 'section') {
                             return (
