@@ -1,0 +1,69 @@
+﻿
+D:\NOOB\NagrikEye\frontend\src\context\AuthContext.jsx
+  26:7  error  Error: Calling setState synchronously within an effect can trigger cascading renders
+
+Effects are intended to synchronize state between React and external systems such as manually updating the DOM, state management libraries, or other platform APIs. In general, the body of an effect should do one or both of the following:
+* Update external systems with the latest state from React.
+* Subscribe for updates from some external system, calling setState in a callback function when external state changes.
+
+Calling setState synchronously within an effect body causes cascading renders that can hurt performance, and is not recommended. (https://react.dev/learn/you-might-not-need-an-effect).
+
+  24 |     } catch (err) {
+  25 |       console.error("Failed to setup auth:", err);
+> 26 |       setError(err.message);
+     |       ^^^^^^^^ Avoid calling setState() directly within an effect
+  27 |       setLoading(false);
+  28 |     }
+  29 |   }, []);  react-hooks/set-state-in-effect
+
+D:\NOOB\NagrikEye\frontend\src\context\LanguageContext.jsx
+  96:14  error  Fast refresh only works when a file only exports components. Use a new file to share constants or functions between components  react-refresh/only-export-components
+
+D:\NOOB\NagrikEye\frontend\src\pages\AdminAI.jsx
+  54:11  warning  The 'generateSummary' function makes the dependencies of useEffect Hook (at line 143) change on every render. To fix this, wrap the definition of 'generateSummary' in its own useCallback() Hook  react-hooks/exhaustive-deps
+
+D:\NOOB\NagrikEye\frontend\src\pages\AdminReports.jsx
+  81:9  error  Error: Calling setState synchronously within an effect can trigger cascading renders
+
+Effects are intended to synchronize state between React and external systems such as manually updating the DOM, state management libraries, or other platform APIs. In general, the body of an effect should do one or both of the following:
+* Update external systems with the latest state from React.
+* Subscribe for updates from some external system, calling setState in a callback function when external state changes.
+
+Calling setState synchronously within an effect body causes cascading renders that can hurt performance, and is not recommended. (https://react.dev/learn/you-might-not-need-an-effect).
+
+  79 |     // Reset category filter when department tab changes
+  80 |     useEffect(() => {
+> 81 |         setCategoryFilter('all');
+     |         ^^^^^^^^^^^^^^^^^ Avoid calling setState() directly within an effect
+  82 |         setIsCategoryDropdownOpen(false);
+  83 |     }, [activeDept]);
+  84 |  react-hooks/set-state-in-effect
+
+D:\NOOB\NagrikEye\frontend\src\pages\VistaApp.jsx
+  12:11  error  'user' is assigned a value but never used. Allowed unused vars must match /^[A-Z_]/u    no-unused-vars
+  12:17  error  'logout' is assigned a value but never used. Allowed unused vars must match /^[A-Z_]/u  no-unused-vars
+
+D:\NOOB\NagrikEye\frontend\src\vista-components\Footer.jsx
+  6:23  error  'setShowDeniers' is assigned a value but never used. Allowed unused vars must match /^[A-Z_]/u  no-unused-vars
+
+D:\NOOB\NagrikEye\frontend\src\vista-components\Header.jsx
+  1:17  error  'useEffect' is defined but never used. Allowed unused vars must match /^[A-Z_]/u  no-unused-vars
+  1:28  error  'useState' is defined but never used. Allowed unused vars must match /^[A-Z_]/u   no-unused-vars
+
+D:\NOOB\NagrikEye\frontend\src\vista-components\MapView.jsx
+  24:17  error  Empty block statement  no-empty
+
+D:\NOOB\NagrikEye\frontend\src\vista-components\VistaAIAssistant.jsx
+  4:47  error  'setDoc' is defined but never used. Allowed unused vars must match /^[A-Z_]/u  no-unused-vars
+  4:55  error  'doc' is defined but never used. Allowed unused vars must match /^[A-Z_]/u     no-unused-vars
+  6:29  error  'onClose' is defined but never used                                            no-unused-vars
+
+D:\NOOB\NagrikEye\frontend\src\vista-context\AppStateContext.jsx
+  40:1  warning  Unused eslint-disable directive (no problems were reported from 'react-hooks/exhaustive-deps')
+  42:9  warning  The 'refreshWeather' function makes the dependencies of useMemo Hook (at line 76) change on every render. Move it inside the useMemo callback. Alternatively, wrap the definition of 'refreshWeather' in its own useCallback() Hook  react-hooks/exhaustive-deps
+  51:1  warning  Unused eslint-disable directive (no problems were reported from 'react-hooks/exhaustive-deps')
+  53:9  warning  The 'generateAdvice' function makes the dependencies of useMemo Hook (at line 76) change on every render. Move it inside the useMemo callback. Alternatively, wrap the definition of 'generateAdvice' in its own useCallback() Hook  react-hooks/exhaustive-deps
+
+Γ£û 17 problems (12 errors, 5 warnings)
+  0 errors and 2 warnings potentially fixable with the `--fix` option.
+

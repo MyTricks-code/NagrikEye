@@ -28,7 +28,7 @@ const Navbar = ({ onOpenReport }) => {
                 { label: 'Home', hasDropdown: false, path: "/", isRoute: true },
                 { label: 'Mission', hasDropdown: false, path: "#mission", isRoute: false },
                 { label: 'Community Feed', hasDropdown: false, path: "#reports", isRoute: false },
-                { label: 'Map', hasDropdown: false, path: "#map", isRoute: false }
+                { label: 'Kiosk', hasDropdown: false, path: "/kiosk", isRoute: true }
               ].map((item) => (
                 <div key={item.label} className="relative group flex items-center justify-center px-6 h-[46.75px] cursor-pointer">
                   <span className="absolute inset-0 bg-[#F5F1E4] rounded-full opacity-0 scale-75 group-hover:opacity-100 group-hover:scale-100 transition-all duration-400 ease-[cubic-bezier(0.17,0.67,0.3,1.33)] z-0"></span>
@@ -140,9 +140,9 @@ const Navbar = ({ onOpenReport }) => {
               <a href="#reports" className="px-5 py-3 text-[18px] font-medium text-[#1a1a1a] border-b border-gray-100 hover:bg-gray-50 flex items-center justify-between">
                 Community Feed
               </a>
-              <a href="#map" className="px-5 py-3 text-[18px] font-medium text-[#1a1a1a] border-b border-gray-100 hover:bg-gray-50 flex items-center justify-between">
-                Map
-              </a>
+              <Link to="/kiosk" className="px-5 py-3 text-[18px] font-medium text-emerald-600 border-b border-gray-100 hover:bg-emerald-50 flex items-center justify-between">
+                Kiosk
+              </Link>
               <Link to="/vista" className="px-5 py-3 text-[18px] font-medium text-[#1a1a1a] hover:bg-gray-50">
                 Vista
               </Link>
